@@ -140,19 +140,28 @@ class arousalWindow(QtWidgets.QMainWindow):
         # lucidBinLayout.addWidget(QtWidgets.QRadioButton('semi'))
         # lucidBinLayout.addWidget(QtWidgets.QRadioButton('yes'))
 
-        # lucid continous probe
-        self.lucidSlider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
-        self.lucidSlider.setRange(0,29)
-        self.lucidSlider.setValue(0) # default :/
-        self.lucidSlider.setTickPosition(QtWidgets.QSlider.TicksBelow)
-        self.lucidSlider.setTickInterval(1)
-        self.lucidSlider.setSingleStep(1)
-        lucidContLabel = QtWidgets.QLabel('How lucid were you?')
-        lucidContBox = QtWidgets.QGroupBox()
-        lucidContLayout = QtWidgets.QHBoxLayout()
-        lucidContBox.setLayout(lucidContLayout)
-        lucidContLayout.addWidget(lucidContLabel)
-        lucidContLayout.addWidget(self.lucidSlider)
+        # # lucid continous probe
+        # self.lucidSlider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
+        # self.lucidSlider.setRange(0,29)
+        # self.lucidSlider.setValue(0) # default :/
+        # self.lucidSlider.setTickPosition(QtWidgets.QSlider.TicksBelow)
+        # self.lucidSlider.setTickInterval(1)
+        # self.lucidSlider.setSingleStep(1)
+        # lucidContLabel = QtWidgets.QLabel('How lucid were you?')
+        # lucidContBox = QtWidgets.QGroupBox()
+        # lucidContLayout = QtWidgets.QHBoxLayout()
+        # lucidContBox.setLayout(lucidContLayout)
+        # lucidContLayout.addWidget(lucidContLabel)
+        # lucidContLayout.addWidget(self.lucidSlider)
+
+        # memory sources open response
+        self.memsrcText = QtWidgets.QTextEdit()
+        memsrcLabel = QtWidgets.QLabel('Try to estimate the memory sources of the dream.')
+        memsrcBox = QtWidgets.QGroupBox()
+        memsrcLayout = QtWidgets.QVBoxLayout()
+        memsrcBox.setLayout(memsrcLayout)
+        memsrcLayout.addWidget(memsrcLabel)
+        memsrcLayout.addWidget(self.memsrcText)
 
         # buttons for scales
         scales = ['DLQ','LuCiD']
@@ -171,7 +180,7 @@ class arousalWindow(QtWidgets.QMainWindow):
         # grid.addWidget(prelimBox,0,0)
         grid.addWidget(reportBox,0,0)
         grid.addWidget(lucidBinBox,1,0)
-        grid.addWidget(lucidContBox,2,0)
+        grid.addWidget(memsrcBox,2,0)
         grid.addWidget(optbttnsBox,3,0)
 
         centralWidget = QtWidgets.QWidget()
@@ -225,6 +234,11 @@ class arousalWindow(QtWidgets.QMainWindow):
         dream_report = self.reportText.toPlainText()
         if len(dream_report) > 0:
             payload['report'] = dream_report
+
+        # get text memory sources report
+        memsrc_report = self.memsrcText.toPlainText()
+        if len(memsrc_report) > 0:
+            payload['memory_sources'] = memsrc_report
 
         # get lucidity response
         downBttns = [ b for b in self.lucidityRadBttns if b.isChecked() ]
