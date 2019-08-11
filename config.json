@@ -1,6 +1,15 @@
 {
+    
     "data_directory" : "../data",
     "subject_id"     : "sub-001",
 
-    "SaA_data_directory" : "~/DBp/SaA_data"
+    "SaA_data_directory" : "~/DBp/SaA_data",
+
+    "setup_keys" :[
+        "sleep_aids",
+        "LDIMs",
+        "diary",
+        "notes"
+    ]
+
 }

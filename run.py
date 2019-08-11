@@ -17,11 +17,13 @@ with open(CONFIG_FNAME,'r') as infile:
     CONFIG = json.load(infile)
 data_dir   = CONFIG['data_directory']
 subject_id = CONFIG['subject_id']
+setup_keys = CONFIG['setup_keys']
+
 if '~' in data_dir:
     data_dir = os.path.expanduser(data_dir)
 
 # run the app
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = sessionWindow(data_dir,subject_id,location)
+    window = sessionWindow(data_dir,subject_id,location,setup_keys)
     sys.exit(app.exec_())

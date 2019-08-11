@@ -30,10 +30,12 @@ class sessionWindow(QtWidgets.QMainWindow):
     This file is not initialized until the Update button is hit.
     Everything left blank will not go into the file.
     """
-    def __init__(self,data_dir,subject_id,location):
+    def __init__(self,data_dir,subject_id,location,setup_keys):
                       # session_id='ses-0001',
                       # wakeup_id='wkup-01'):
         super().__init__()
+        
+        self.setup_keys = setup_keys
         
         self.data_dir = data_dir
         self.sub_id = subject_id
@@ -116,9 +118,8 @@ class sessionWindow(QtWidgets.QMainWindow):
 
         # make a series of options for the *_setup.json file
         # each option needs a label and lineedit
-        OPTIONS = ['sleep_aids','wbtb_plans','diary','notes']
-        self.setupLabels = [ QtWidgets.QLabel(opt) for opt in OPTIONS ]
-        self.setupLEdits = [ QtWidgets.QLineEdit() for opt in OPTIONS ]
+        self.setupLabels = [ QtWidgets.QLabel(opt) for opt in self.setup_keys ]
+        self.setupLEdits = [ QtWidgets.QLineEdit() for opt in self.setup_keys ]
         # and a button to update them
         updateSetupButton = QtWidgets.QPushButton('Update setup')
         updateSetupButton.clicked.connect(self.save_setup)
