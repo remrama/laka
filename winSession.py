@@ -36,7 +36,7 @@ class sessionWindow(QtWidgets.QMainWindow):
         super().__init__()
         
         self.setup_keys = setup_keys
-        
+
         self.data_dir = data_dir
         self.sub_id = subject_id
         self.session_fname = f'{self.data_dir}/{self.sub_id}/{self.sub_id}_sessions.tsv'
@@ -147,7 +147,7 @@ class sessionWindow(QtWidgets.QMainWindow):
             response = lineedit.text()
             if response:
                 # sleep aids an be separate by commas
-                if label.text() == 'sleep_aids' and ',' in response:
+                if ',' in response and label.text() in ['sleep_aids','LDIMs']:
                     response = [ r.strip() for r in response.split(',') ]
                 setup_payload[label.text()] = response
         with open(self.setup_fname,'w') as json_file:

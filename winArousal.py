@@ -35,8 +35,7 @@ class arousalWindow(QtWidgets.QMainWindow):
         self.init_new_arousal()
 
         # for creating/saving
-        self.dream_fname = f'{data_dir}/{sub_id}/{ses_id}/{sub_id}_{ses_id}_task-sleep_{self.aro_id}_dream.json'
-
+        self.dream_fname = f'{data_dir}/{sub_id}/{ses_id}/dreams/{sub_id}_{ses_id}_task-sleep_{self.aro_id}_dream.json'
 
         self.init_CentralWidget()
 
@@ -46,6 +45,7 @@ class arousalWindow(QtWidgets.QMainWindow):
         and append the arousals.tsv file with a timestamps and arousal type.
         
         TODO: restrict options for arousal type
+
         """
         current_arousal_num = get_next_id_number(self.arousal_fname)
         current_arousal_id = f'aro-{current_arousal_num:03d}'
@@ -240,9 +240,12 @@ class arousalWindow(QtWidgets.QMainWindow):
             # responses = { qnum: slid.value() for qnum, slid in scalewidg.sliders.items() }
 
         # save
+        # If it's the first arousal, then need to make dreams directory.
+        if self.aro_id == 'aro-001':
+            os.mkdir(os.path.dirname(self.dream_fname))
         with open(self.dream_fname,'w') as outfile:
             dump(payload,outfile,sort_keys=True,indent=4,ensure_ascii=False)
-
+        print(f'Saved {self.dream_fname}.')
 
         # from pandas import DataFrame
         # responses = { qnum: slid.value() for qnum, slid in self.sliders.items() }
