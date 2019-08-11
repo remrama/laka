@@ -1,0 +1,42 @@
+{
+    "name": "Lucidity and Consciousness in Dreams scale",
+    "abbreviation": "LuCiD",
+    "version": "n/a",
+    "authors": ["Ursula Voss","Karin Schermelleh-Engel","Jennifer Windt","Clemens Frenzel","Allan Hobson"],
+    "publication": "Measuring consciousness in dreams: The lucidity and consciousness in dreams scale, Consciousness & Cognition",
+    "doi": "10.1016/j.concog.2012.11.001",
+
+    "response_values": [0,1,2,3,4,5],
+    "response_strings": ["Strongly disagree"," "," "," "," ","Strongly Agree"],
+
+    "questions": {
+        "01": "While dreaming, I was aware of the fact that the things I was experiencing in the dream were not real.",
+        "02": "While dreaming, I was able to remember my intention to do certain things in the dream.",
+        "03": "While dreaming, I was aware that the self I experienced in my dream wasn't the same as my waking self.",
+        "04": "In my dream, I was able to manipulate or control other dream characters in a way that would be impossible in waking.",
+        "05": "While dreaming, I thought about other dream characters.",
+        "06": "While dreaming I was able to successfully perform supernatural actions (like flying or passing through walls).",
+        "07": "The emotions I experienced in my dream were exactly the same as those I would experience in such a situation during wakefulness.",
+        "08": "While dreaming, I was aware of the fact that the body I experienced in the dream did not correspond to my real sleeping body.",
+        "09": "I was very certain that the things I was experiencing in my dream wouldn't have any consequences on the real world.",
+        "10": "While dreaming I was able to successfully control or change the dream environment in a way that would be impossible during wakefulness.",
+        "11": "While dreaming, I was myself from the outside.",
+        "12": "While dreaming, I thought about my own actions.",
+        "13": "While dreaming, I had the feeling that I had forgotten something important.",
+        "14": "While dreaming, I was able to change or move objects (not persons) in a way that would be impossible in waking.",
+        "15": "While dreaming I was not myself but a completely different person.",
+        "16": "While dreaming, I often asked myself whether I was dreaming.",
+        "17": "The thoughts I had in my dream were exactly the same as I would have in a similar situation during wakefulness.",
+        "18": "While dreaming, I had the feeling that I could remember my waking life.",
+        "19": "While dreaming, I was aware of the fact that other dream characters in my dream were not real.",
+        "20": "Most things that happened in my dream could have also happened during wakefulness.",
+        "21": "I watched the dream from the outside, as if on a screen.",
+        "22": "While dreaming, I often thought about the things I was experiencing.",
+        "23": "I was able to influence the story line of my dreams at will/at libitum.",
+        "24": "While dreaming, I was able to remember certain plans for the future.",
+        "25": "While dreaming, I felt euphoric/upbeat.",
+        "26": "While dreaming, I had strong negative feelings.",
+        "27": "While dreaming, I had strong positive feelings.",
+        "28": "While dreaming, I felt very anxious."
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "data_directory" : "../data",
+    "subject_id"     : "sub-001",
+
+    "SaA_data_directory" : "~/DBp/SaA_data"
+}

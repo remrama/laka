@@ -1,0 +1,26 @@
+{
+    "name": "Dream Lucidity Questionnaire",
+    "abbreviation": "DLQ",
+    "version": "1.3",
+    "authors": ["Tadas Stumbrys","Daniel Erlacher","Michael Schredl"],
+    "publication": "Testing the involvement of the prefrontal cortex in lucid dreaming. Consciousness & Cognition",
+    "doi": "10.1016/j.concog.2013.08.005",
+
+    "response_values": [0,1,2,3,4],
+    "response_strings": ["Not at all","Just a little","Moderately","Pretty much","Very much"],
+
+    "questions": {
+        "01": "I was aware that I was dreaming.",
+        "02": "I was aware that my physical body was asleep.",
+        "03": "I was aware that all my dream characters were not real people.",
+        "04": "I deliberately chose one action instead of the other.",
+        "05": "I was aware that all dream objects were not real.",
+        "06": "I changed dream events in the way I wanted.",
+        "07": "I recalled some facts or episodes from my waking life.",
+        "08": "I changed dream characters in the way I wanted.",
+        "09": "I broke the physical laws of the waking reality (e.g., flew, went through a wall).",
+        "10": "I changed the dream scene in the way I wanted.",
+        "11": "I thought about different possibilities of what can I do in a dream.",
+        "12": "I clearly remembered my intentions what I wanted to do in a lucid dream."
+    }
+}
