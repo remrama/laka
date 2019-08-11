@@ -1,4 +1,5 @@
 import os
+from json import dump
 from collections import OrderedDict
 
 from PyQt5 import QtWidgets, QtGui
@@ -23,6 +24,11 @@ class sessionWindow(QtWidgets.QMainWindow):
     Each entry is a new session, and it auto-detects
     the session by looking at the subject session file
     and creating the "next" entry.
+
+    *_setup.json file
+    =================
+    This file is not initialized until the Update button is hit.
+    Everything left blank will not go into the file.
     """
     def __init__(self,data_dir,subject_id,location):
                       # session_id='ses-0001',
@@ -35,6 +41,8 @@ class sessionWindow(QtWidgets.QMainWindow):
 
         # create new session id
         self.init_new_session(location)
+
+        self.setup_fname = f'{self.data_dir}/{self.sub_id}/{self.ses_id}/{self.sub_id}_{self.ses_id}_setup.json'
 
         self.initUI()
 
@@ -106,15 +114,44 @@ class sessionWindow(QtWidgets.QMainWindow):
         arousalButton = QtWidgets.QPushButton('New Arousal')
         arousalButton.clicked.connect(self.openArousalWindow)
 
+        # make a series of options for the *_setup.json file
+        # each option needs a label and lineedit
+        OPTIONS = ['sleep_aids','wbtb_plans','diary','notes']
+        self.setupLabels = [ QtWidgets.QLabel(opt) for opt in OPTIONS ]
+        self.setupLEdits = [ QtWidgets.QLineEdit() for opt in OPTIONS ]
+        # and a button to update them
+        updateSetupButton = QtWidgets.QPushButton('Update setup')
+        updateSetupButton.clicked.connect(self.save_setup)
+
         # manage the location/size of widgets
         grid = QtWidgets.QGridLayout()
-        grid.addWidget(self.arousalLineEdit,0,0)
-        grid.addWidget(arousalButton,1,0)
+        i = 0
+        for label, lineedit in zip(self.setupLabels,self.setupLEdits):
+            grid.addWidget(label,i,0)
+            grid.addWidget(lineedit,i,1)
+            i += 1
+        grid.addWidget(updateSetupButton,i,0,1,2)
+        grid.addWidget(self.arousalLineEdit,i+1,0,1,2)
+        grid.addWidget(arousalButton,i+2,0,1,2)
 
         # intialize the central widget
         centralWidget = QtWidgets.QWidget()
         centralWidget.setLayout(grid)
         self.setCentralWidget(centralWidget)
+
+
+    def save_setup(self):
+        setup_payload = {}
+        for label, lineedit in zip(self.setupLabels,self.setupLEdits):
+            response = lineedit.text()
+            if response:
+                # sleep aids an be separate by commas
+                if label.text() == 'sleep_aids' and ',' in response:
+                    response = [ r.strip() for r in response.split(',') ]
+                setup_payload[label.text()] = response
+        with open(self.setup_fname,'w') as json_file:
+            dump(setup_payload,json_file,sort_keys=True,indent=4,ensure_ascii=False)
+        print(f'Saved to {self.setup_fname}.')
 
     def openArousalWindow(self):
         # get the arousal type

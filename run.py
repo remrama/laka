@@ -1,5 +1,5 @@
 """
-Initialize the a new session and open the main laka interface.
+Initialize a new session and open the main laka interface.
 """
 import os, sys, json, argparse
 
