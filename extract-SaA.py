@@ -10,9 +10,9 @@ per entry, since there are different numbers of events.
 Recent entries on *TOP* of csv file!!!
 
 sleep-data.csv gets broken into 3 files
-1. saa_info.json    : all the single-variable parameter stuff
-2. saa_movement.tsv : timestamped movement values (2 columns)
-3. saa_events.tsv   : timestamped events (2 columns)
+1. saa-info.json    : all the single-variable parameter stuff
+2. saa-movement.tsv : timestamped movement values (2 columns)
+3. saa-events.tsv   : timestamped events (2 columns)
 
 prefs.xml gets copied exactly as it is.
 This is generally constant but keep it with each entry
@@ -37,10 +37,10 @@ SaA_pref_fname = f'{SaA_dir}/prefs.xml'
 session_fname = f'{laka_data_dir}/{sub_id}/{sub_id}_sessions.tsv'
 last_ses_num = get_next_id_number(session_fname) - 1
 last_ses_id = f'ses-{last_ses_num:03d}'
-info_fname  = f'{laka_data_dir}/{sub_id}/{last_ses_id}/saa_info.json'
-mov_fname   = f'{laka_data_dir}/{sub_id}/{last_ses_id}/saa_movement.tsv'
-event_fname = f'{laka_data_dir}/{sub_id}/{last_ses_id}/saa_events.tsv'
-pref_fname  = f'{laka_data_dir}/{sub_id}/{last_ses_id}/saa_prefs.xml'
+info_fname  = f'{laka_data_dir}/{sub_id}/{last_ses_id}/{sub_id}_{last_ses_id}_saa-info.json'
+mov_fname   = f'{laka_data_dir}/{sub_id}/{last_ses_id}/{sub_id}_{last_ses_id}_saa-movement.tsv'
+event_fname = f'{laka_data_dir}/{sub_id}/{last_ses_id}/{sub_id}_{last_ses_id}_saa-events.tsv'
+pref_fname  = f'{laka_data_dir}/{sub_id}/{last_ses_id}/{sub_id}_{last_ses_id}_saa-prefs.xml'
 assert os.path.getmtime(SaA_fname) < time.time()-(3600), \
     'The datafile was not updated/synced in the last hour.'
 
