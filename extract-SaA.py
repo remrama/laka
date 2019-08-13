@@ -26,21 +26,20 @@ from utils import get_next_id_number
 CONFIG_FNAME = './config.json'
 with open(CONFIG_FNAME,'r') as infile:
     CONFIG = json.load(infile)
-laka_data_dir = CONFIG['data_directory']
+data_dir = CONFIG['data_directory']
 sub_id = CONFIG['subject_id']
-SaA_dir = os.path.expanduser(CONFIG['SaA_data_directory'])
 
-SaA_fname = f'{SaA_dir}/sleep-export.csv'
-SaA_pref_fname = f'{SaA_dir}/prefs.xml'
+SaA_fname      = f'{data_dir}/source/{sub_id}/sleep_as_android/sleep-export.csv'
+SaA_pref_fname = f'{data_dir}/source/{sub_id}/sleep_as_android/prefs.xml'
 
 # make the filenames that will be used for exporting
-session_fname = f'{laka_data_dir}/{sub_id}/{sub_id}_sessions.tsv'
+session_fname = f'{data_dir}/{sub_id}/{sub_id}_sessions.tsv'
 last_ses_num = get_next_id_number(session_fname) - 1
 last_ses_id = f'ses-{last_ses_num:03d}'
-info_fname  = f'{laka_data_dir}/{sub_id}/{last_ses_id}/{sub_id}_{last_ses_id}_saa-info.json'
-mov_fname   = f'{laka_data_dir}/{sub_id}/{last_ses_id}/{sub_id}_{last_ses_id}_saa-movement.tsv'
-event_fname = f'{laka_data_dir}/{sub_id}/{last_ses_id}/{sub_id}_{last_ses_id}_saa-events.tsv'
-pref_fname  = f'{laka_data_dir}/{sub_id}/{last_ses_id}/{sub_id}_{last_ses_id}_saa-prefs.xml'
+info_fname  = f'{data_dir}/{sub_id}/{last_ses_id}/{sub_id}_{last_ses_id}_saa-info.json'
+mov_fname   = f'{data_dir}/{sub_id}/{last_ses_id}/{sub_id}_{last_ses_id}_saa-movement.tsv'
+event_fname = f'{data_dir}/{sub_id}/{last_ses_id}/{sub_id}_{last_ses_id}_saa-events.tsv'
+pref_fname  = f'{data_dir}/{sub_id}/{last_ses_id}/{sub_id}_{last_ses_id}_saa-prefs.xml'
 assert os.path.getmtime(SaA_fname) < time.time()-(3600), \
     'The datafile was not updated/synced in the last hour.'
 
