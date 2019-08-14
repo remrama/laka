@@ -1,5 +1,5 @@
 import os
-from json import dump
+from json import dump, load
 from collections import OrderedDict
 
 from PyQt5 import QtWidgets, QtGui
@@ -10,6 +10,7 @@ from utils import id2num,                   \
                   append_tsv_row
 
 from winArousal import arousalWindow
+from winScale import ScalePopup
 
 
 class sessionWindow(QtWidgets.QMainWindow):
@@ -46,6 +47,12 @@ class sessionWindow(QtWidgets.QMainWindow):
 
         self.setup_fname = f'{self.data_dir}/{self.sub_id}/{self.ses_id}/{self.sub_id}_{self.ses_id}_setup.json'
 
+        # get the available scales for menu
+        with open('./config.json','r') as json_file:
+            config = load(json_file)
+            self.pheno_scales = config['longitudinal_scales']
+            self.arousal_types = config['arousal_types']
+
         self.initUI()
 
 
@@ -76,27 +83,64 @@ class sessionWindow(QtWidgets.QMainWindow):
         
     def initUI(self):
 
-        #####  setup toolbar  #####
-        # exit button
-        # exitAct = QtWidgets.QAction(QtGui.QIcon('./image.jpg'),'&Exit',self)        
-        exitAct = QtWidgets.QAction('&Exit',self)        
+
+        self.statusBar().showMessage('Ready')
+
+
+        ##### create actions that can be applied to *either* menu or toolbar #####
+        # exitAct = QtWidgets.QAction(,'&Exit',self)        
+        exitAct = QtWidgets.QAction('&Exit',self) #QtGui.QIcon('./image.jpg')
         exitAct.setShortcut('Ctrl+Q')
         exitAct.setStatusTip('Exit application')
         exitAct.triggered.connect(QtWidgets.qApp.quit)
-        # save button
+        
         saveAct = QtWidgets.QAction('&Save File',self)
         saveAct.setShortcut('Ctrl+S')
         saveAct.setStatusTip('Save File')
         # saveAct.triggered.connect(self.savefile)
 
-        self.statusBar().showMessage('Ready')
-        toolbar = self.addToolBar('Exit')
-        toolbar.addAction(exitAct)
-        toolbar.addAction(saveAct)
-        # menubar = self.menuBar()
-        # menubar.setNativeMenuBar(False) # needed for pyqt5
-        # fileMenu = menubar.addMenu('&File')
-        # fileMenu.addAction(exitAct)
+        phenoscaleActs = [ QtWidgets.QAction(scale,self) for scale in self.pheno_scales ]
+        for action, scale in zip(phenoscaleActs,self.pheno_scales):
+            action.setStatusTip(f'Create new {scale} scale')
+            action.triggered.connect(self.open_phenotype_scale)
+
+        arousalActs = [ QtWidgets.QAction(arotype,self) for arotype in self.arousal_types ]
+        for action, arotype in zip(arousalActs,self.arousal_types):
+            action.setStatusTip(f'Create new arousal with type as {arotype}')
+            action.triggered.connect(self.openArousalWindow)
+
+
+        #####  setup menu bar  #####
+        menuBar = self.menuBar()
+        menuBar.setNativeMenuBar(False) # needed for pyqt5 on Mac
+
+        fileMenu = menuBar.addMenu('&File')
+        fileMenu.addAction(exitAct)
+
+        # make submenu for available phenotype scales
+        newMenu = menuBar.addMenu('&New')
+
+        phenoMenu = QtWidgets.QMenu('Phenotype',self)
+        for scaleAction in phenoscaleActs:
+            phenoMenu.addAction(scaleAction)
+        newMenu.addMenu(phenoMenu)
+
+        arousalMenu = QtWidgets.QMenu('Arousal',self)
+        for scaleAction in arousalActs:
+            arousalMenu.addAction(scaleAction)
+        newMenu.addMenu(arousalMenu)
+
+        # mainMenu = self.menuBar()
+        # mainMenu.setNativeMenuBar(False)
+        # fileMenu = mainMenu.addMenu('TEST')
+        # fileAction = fileMenu.addAction('Change file')
+        # fileAction.triggered.connect(lambda x: print(x))
+
+
+
+        #####  setup tool bar  #####
+        # toolbar = self.addToolBar('Exit')
+        # toolbar.addAction(exitAct)
 
         # create central widget for holding grid layout
         self.init_CentralWidget()
@@ -107,14 +151,16 @@ class sessionWindow(QtWidgets.QMainWindow):
         self.setWindowTitle('laka')    
         self.show()
 
+
+    def open_phenotype_scale(self):
+        scale = self.sender().text()
+        self.scalewin = ScalePopup(scale,self.sub_id)
+        self.scalewin.show()
+
+
     def init_CentralWidget(self):
         """The central widget holds the *non-toolbar*
         contents of the main window."""
-
-        # make a button to initialize a new Arousal
-        self.arousalLineEdit = QtWidgets.QLineEdit()
-        arousalButton = QtWidgets.QPushButton('New Arousal')
-        arousalButton.clicked.connect(self.openArousalWindow)
 
         # make a series of options for the *_setup.json file
         # each option needs a label and lineedit
@@ -132,8 +178,6 @@ class sessionWindow(QtWidgets.QMainWindow):
             grid.addWidget(lineedit,i,1)
             i += 1
         grid.addWidget(updateSetupButton,i,0,1,2)
-        grid.addWidget(self.arousalLineEdit,i+1,0,1,2)
-        grid.addWidget(arousalButton,i+2,0,1,2)
 
         # intialize the central widget
         centralWidget = QtWidgets.QWidget()
@@ -156,7 +200,7 @@ class sessionWindow(QtWidgets.QMainWindow):
 
     def openArousalWindow(self):
         # get the arousal type
-        aro_type = self.arousalLineEdit.text()
+        aro_type = self.sender().text()
         # initialize the widget
         self.arousalWindow = arousalWindow(self.data_dir,self.sub_id,self.ses_id,aro_type)
         # show the widget

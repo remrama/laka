@@ -27,8 +27,14 @@ class arousalWindow(QtWidgets.QMainWindow):
     def __init__(self,data_dir,sub_id,ses_id,arousal_type,parent=None):
         super(self.__class__, self).__init__(parent)
 
+        self.sub_id = sub_id
+
         # for appending
         self.arousal_fname = f'{data_dir}/{sub_id}/{ses_id}/{sub_id}_{ses_id}_arousals.tsv'
+
+        with open('./config.json') as json_file:
+            config = load(json_file)
+        self.available_scales = config['arousal_scales']
 
         # generates arousal id
         self.aro_type = arousal_type
@@ -39,11 +45,6 @@ class arousalWindow(QtWidgets.QMainWindow):
 
         self.init_CentralWidget()
 
-        self.sub_id = sub_id
-
-        with open('./config.json') as json_file:
-            config = load(json_file)
-        self.available_scales = config['arousal_scales']
 
 
 
@@ -254,9 +255,8 @@ class arousalWindow(QtWidgets.QMainWindow):
         # add scale responses
         for scalename, scalewidg in self.popups.items():
             if self.popups_completed[scalename]:
-                if 'scales' not in payload.keys():
-                    payload['scales'] = {}
-                payload['scales'][scalename] = [ slid.value() for slid in scalewidg.sliders.values() ]
+                payload[scalename] = scalewidg.payload
+                # payload['scales'][scalename] = [ slid.value() for slid in scalewidg.sliders.values() ]
             # responses = { qnum: slid.value() for qnum, slid in scalewidg.sliders.items() }
 
         # save

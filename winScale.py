@@ -1,5 +1,6 @@
 
 import sys
+from json import load
 from PyQt5 import QtGui, QtWidgets, QtCore
 
 from utils import get_current_timestamp
@@ -9,7 +10,11 @@ class ScalePopup(QtWidgets.QScrollArea):
         super(self.__class__, self).__init__()
         # QtWidgets.QWidget.__init__(self)
 
+        self.scalename = scalename
         self.scale_fname = f'./scales/{scalename}.json'
+        with open('./config.json') as json_file:
+            config = load(json_file)
+        self.longitudinal_scales = config['longitudinal_scales']
 
         timestamp = get_current_timestamp().split('T')[0]
         self.results_fname = f'../data/source/{subject_id}/phenotype/{scalename}_{timestamp}.json'
@@ -24,6 +29,7 @@ class ScalePopup(QtWidgets.QScrollArea):
         widget.setLayout(grid)
 
         self.load_probes()
+        self.payload = {} # to hold results (though they get overwritten everytime so could just init each time :/)
 
         self.QProbes = {} # for later accessing the data
         for i, (probe_var, probe_info) in enumerate(self.probes.items()):
@@ -42,7 +48,7 @@ class ScalePopup(QtWidgets.QScrollArea):
                 self.QProbes[probe_var] = QtWidgets.QComboBox()
                 # for level_val, level_name in probe_info['Levels'].items():
                 self.QProbes[probe_var].addItems(probe_info['Levels'].values())
-                self.QProbes[probe_var].currentIndexChanged.connect(self.save)
+                self.QProbes[probe_var].currentIndexChanged.connect(self.update_payload)
             grid.addWidget(self.QProbes[probe_var],i,1)
 
         self.setWidget(widget)
@@ -56,15 +62,7 @@ class ScalePopup(QtWidgets.QScrollArea):
         self.setWindowTitle(scalename)
 
 
-    def save(self,i):
-        """Save every time anything changes.
-        """
-        # payload = { k: v.currentText() for k, v in self.QProbes.items() }
-        # payload = { k: v.currentIndex() for k, v in self.QProbes.items() }
-        # payload = { k: list(self.probes[k]['Levels'].keys())[v.currentIndex()] for k, v in self.QProbes.items() }
-        from json import dump
-        
-        payload = {}
+    def update_payload(self,i):
         for k, v in self.QProbes.items():
             # getting response also depends on response type
             if isinstance(v,QtWidgets.QComboBox):
@@ -75,11 +73,26 @@ class ScalePopup(QtWidgets.QScrollArea):
                 response = int(response[0])
             elif isinstance(v,QtWidgets.QSpinBox):
                 response = v.value()
-            payload[k] = response
+            self.payload[k] = response
 
-        payload['acq_time'] = get_current_timestamp()
+        self.payload['acq_time'] = get_current_timestamp()
+        
+        # only save if longitudinal scale.
+        # otherwise it's an arousal scale and will be saved
+        # within the arousal window.
+        if self.scalename in self.longitudinal_scales:
+            self.save()
+
+
+    def save(self):
+        """Save every time anything changes.
+        """
+        # payload = { k: v.currentText() for k, v in self.QProbes.items() }
+        # payload = { k: v.currentIndex() for k, v in self.QProbes.items() }
+        # payload = { k: list(self.probes[k]['Levels'].keys())[v.currentIndex()] for k, v in self.QProbes.items() }
+        from json import dump
         with open(self.results_fname,'w') as json_file:
-            dump(payload,json_file,indent=4,ensure_ascii=False)#,sort_keys=True)
+            dump(self.payload,json_file,indent=4,ensure_ascii=False)#,sort_keys=True)
         
 
     def load_probes(self):
