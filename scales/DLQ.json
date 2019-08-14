@@ -1,13 +1,13 @@
 {
     "MeasurementToolMetadata" : {
         "Description"    : "Dream Lucidity Questionnaire V1.3",
-        "TermURL"        : "??",
         "PublicationDOI" : "10.1016/j.concog.2013.08.005"
     },
 
     "dlq_1" : {
         "Description" : "I was aware that I was dreaming.",
         "Levels"      : {
+            "-99" : "",
             "0" : "Not at all",
             "1" : "Just a little",
             "2" : "Moderately",
@@ -19,6 +19,7 @@
     "dlq_2" : {
         "Description" : "I was aware that my physical body was asleep.",
         "Levels"      : {
+            "-99" : "",
             "0" : "Not at all",
             "1" : "Just a little",
             "2" : "Moderately",
@@ -30,6 +31,7 @@
     "dlq_3" : {
         "Description" : "I was aware that all my dream characters were not real people.",
         "Levels"      : {
+            "-99" : "",
             "0" : "Not at all",
             "1" : "Just a little",
             "2" : "Moderately",
