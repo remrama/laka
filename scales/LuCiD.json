@@ -1,42 +1,371 @@
 {
-    "name": "Lucidity and Consciousness in Dreams scale",
-    "abbreviation": "LuCiD",
-    "version": "n/a",
-    "authors": ["Ursula Voss","Karin Schermelleh-Engel","Jennifer Windt","Clemens Frenzel","Allan Hobson"],
-    "publication": "Measuring consciousness in dreams: The lucidity and consciousness in dreams scale, Consciousness & Cognition",
-    "doi": "10.1016/j.concog.2012.11.001",
+    "MeasurementToolMetadata" : {
+        "Description"    : "Lucidity and Consciousness in Dreams scale",
+        "TermURL"        : "??",
+        "PublicationDOI" : "10.1016/j.concog.2012.11.001"
+    },
 
-    "response_values": [0,1,2,3,4,5],
-    "response_strings": ["Strongly disagree"," "," "," "," ","Strongly Agree"],
+    "lucid_1" : {
+        "Description" : "While dreaming, I was aware of the fact that the things I was experiencing in the dream were not real.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
 
-    "questions": {
-        "01": "While dreaming, I was aware of the fact that the things I was experiencing in the dream were not real.",
-        "02": "While dreaming, I was able to remember my intention to do certain things in the dream.",
-        "03": "While dreaming, I was aware that the self I experienced in my dream wasn't the same as my waking self.",
-        "04": "In my dream, I was able to manipulate or control other dream characters in a way that would be impossible in waking.",
-        "05": "While dreaming, I thought about other dream characters.",
-        "06": "While dreaming I was able to successfully perform supernatural actions (like flying or passing through walls).",
-        "07": "The emotions I experienced in my dream were exactly the same as those I would experience in such a situation during wakefulness.",
-        "08": "While dreaming, I was aware of the fact that the body I experienced in the dream did not correspond to my real sleeping body.",
-        "09": "I was very certain that the things I was experiencing in my dream wouldn't have any consequences on the real world.",
-        "10": "While dreaming I was able to successfully control or change the dream environment in a way that would be impossible during wakefulness.",
-        "11": "While dreaming, I was myself from the outside.",
-        "12": "While dreaming, I thought about my own actions.",
-        "13": "While dreaming, I had the feeling that I had forgotten something important.",
-        "14": "While dreaming, I was able to change or move objects (not persons) in a way that would be impossible in waking.",
-        "15": "While dreaming I was not myself but a completely different person.",
-        "16": "While dreaming, I often asked myself whether I was dreaming.",
-        "17": "The thoughts I had in my dream were exactly the same as I would have in a similar situation during wakefulness.",
-        "18": "While dreaming, I had the feeling that I could remember my waking life.",
-        "19": "While dreaming, I was aware of the fact that other dream characters in my dream were not real.",
-        "20": "Most things that happened in my dream could have also happened during wakefulness.",
-        "21": "I watched the dream from the outside, as if on a screen.",
-        "22": "While dreaming, I often thought about the things I was experiencing.",
-        "23": "I was able to influence the story line of my dreams at will/at libitum.",
-        "24": "While dreaming, I was able to remember certain plans for the future.",
-        "25": "While dreaming, I felt euphoric/upbeat.",
-        "26": "While dreaming, I had strong negative feelings.",
-        "27": "While dreaming, I had strong positive feelings.",
-        "28": "While dreaming, I felt very anxious."
+    "lucid_2" : {
+        "Description" : "While dreaming, I was able to remember my intention to do certain things in the dream.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_3" : {
+        "Description" : "While dreaming, I was aware that the self I experienced in my dream wasn't the same as my waking self.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_4" : {
+        "Description" : "In my dream, I was able to manipulate or control other dream characters in a way that would be impossible in waking.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_5" : {
+        "Description" : "While dreaming, I thought about other dream characters.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_6" : {
+        "Description" : "While dreaming I was able to successfully perform supernatural actions (like flying or passing through walls).",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_7" : {
+        "Description" : "The emotions I experienced in my dream were exactly the same as those I would experience in such a situation during wakefulness.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_8" : {
+        "Description" : "While dreaming, I was aware of the fact that the body I experienced in the dream did not correspond to my real sleeping body.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_9" : {
+        "Description" : "I was very certain that the things I was experiencing in my dream wouldn't have any consequences on the real world.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_10" : {
+        "Description" : "While dreaming I was able to successfully control or change the dream environment in a way that would be impossible during wakefulness.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_11" : {
+        "Description" : "While dreaming, I was myself from the outside.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_12" : {
+        "Description" : "While dreaming, I thought about my own actions.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_13" : {
+        "Description" : "While dreaming, I had the feeling that I had forgotten something important.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_14" : {
+        "Description" : "While dreaming, I was able to change or move objects (not persons) in a way that would be impossible in waking.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_15" : {
+        "Description" : "While dreaming I was not myself but a completely different person.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_16" : {
+        "Description" : "While dreaming, I often asked myself whether I was dreaming.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_17" : {
+        "Description" : "The thoughts I had in my dream were exactly the same as I would have in a similar situation during wakefulness.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_18" : {
+        "Description" : "While dreaming, I had the feeling that I could remember my waking life.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_19" : {
+        "Description" : "While dreaming, I was aware of the fact that other dream characters in my dream were not real.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_20" : {
+        "Description" : "Most things that happened in my dream could have also happened during wakefulness.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_21" : {
+        "Description" : "I watched the dream from the outside, as if on a screen.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_22" : {
+        "Description" : "While dreaming, I often thought about the things I was experiencing.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_23" : {
+        "Description" : "I was able to influence the story line of my dreams at will/at libitum.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_24" : {
+        "Description" : "While dreaming, I was able to remember certain plans for the future.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_25" : {
+        "Description" : "While dreaming, I felt euphoric/upbeat.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_26" : {
+        "Description" : "While dreaming, I had strong negative feelings.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_27" : {
+        "Description" : "While dreaming, I had strong positive feelings.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
+    },
+
+    "lucid_28" : {
+        "Description" : "While dreaming, I felt very anxious.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "0 - Strongly disagree",
+            "1"   : "1",
+            "2"   : "2",
+            "3"   : "3",
+            "4"   : "4",
+            "5"   : "5 - Strongly agree"
+        }
     }
 }

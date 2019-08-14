@@ -3,11 +3,16 @@
     "data_directory" : "../data",
     "subject_id"     : "sub-001",
 
-    "setup_keys" :[
+    "setup_keys" : [
         "sleep_aids",
         "LDIMs",
         "diary",
         "notes"
+    ],
+
+    "arousal_scales" : [
+        "DLQ",
+        "LuCiD"
     ]
 
 }

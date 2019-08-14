@@ -1,5 +1,5 @@
 import os
-from json import dump
+from json import dump, load
 # from collections import OrderedDict
 
 from PyQt5 import QtGui, QtWidgets, QtCore
@@ -38,6 +38,13 @@ class arousalWindow(QtWidgets.QMainWindow):
         self.dream_fname = f'{data_dir}/{sub_id}/{ses_id}/dreams/{sub_id}_{ses_id}_task-sleep_{self.aro_id}_dream.json'
 
         self.init_CentralWidget()
+
+        self.sub_id = sub_id
+
+        with open('./config.json') as json_file:
+            config = load(json_file)
+        self.available_scales = config['arousal_scales']
+
 
 
     def init_new_arousal(self):
@@ -164,8 +171,7 @@ class arousalWindow(QtWidgets.QMainWindow):
         memsrcLayout.addWidget(self.memsrcText)
 
         # buttons for scales
-        scales = ['DLQ','LuCiD']
-        scaleButtons = [ QtWidgets.QPushButton(s) for s in scales ]
+        scaleButtons = [ QtWidgets.QPushButton(s) for s in self.available_scales ]
         for bttn in scaleButtons:
             bttn.clicked.connect(self.openScaleWindow)
         optbttnsBox = QtWidgets.QGroupBox()
@@ -188,9 +194,9 @@ class arousalWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(centralWidget)
 
 
-        self.popups = { sname: ScalePopup(sname) for sname in scales }
+        self.popups = { sname: ScalePopup(sname,self.sub_id) for sname in self.available_scales }
         # dict to later determine whether a scale was used/clicked
-        self.popups_completed = { sname: False for sname in scales }
+        self.popups_completed = { sname: False for sname in self.available_scales }
 
     # def save_scale(self,scalename):
     #     from pandas import DataFrame

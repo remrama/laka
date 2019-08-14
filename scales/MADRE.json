@@ -1,0 +1,323 @@
+{
+    "MeasurementToolMetadata" : {
+        "Description"    : "Mannheim Dream Questionnaire",
+        "TermURL"        : "??",
+        "PublicationDOI" : "10.11588/ijodr.2014.2.16675"
+    },
+
+    "recall" : {
+        "Description" : "How often have you recalled your dreams recently (in the past several months)?",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "Never",
+            "1"   : "Less than once a month",
+            "2"   : "About once a month",
+            "3"   : "Two or three times a month",
+            "4"   : "About once a week",
+            "5"   : "Several times a week",
+            "6"   : "Almost every morning"
+        }
+    },
+
+    "emotional_intensity" : {
+        "Description" : "How intense are your dreams emotionally?",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "Not at all intense",
+            "1"   : "Not that intense",
+            "2"   : "Somewhat intense",
+            "3"   : "Quite intense",
+            "4"   : "Very intense"
+        }
+    },
+
+    "emotional_tone" : {
+        "Description" : "What is the emotional tone of your dreams on average?",
+        "Levels"      : {
+            "-99" : "",
+            "1"   : "Very negative",
+            "2"   : "Somewhat negative",
+            "3"   : "Neutral",
+            "4"   : "Somewhat positive",
+            "5"   : "Very positive"
+        }
+    },
+
+    "nm_freq" : {
+        "Description" : "How often have you experienced nightmares recently (in the past several months)?",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "Never",
+            "1"   : "Less than once a year",
+            "2"   : "About once a year",
+            "3"   : "About two to four times a year",
+            "4"   : "About once a month",
+            "5"   : "Two to three times a month",
+            "6"   : "About once a week",
+            "7"   : "Several times a week"
+        }
+    },
+
+    "nm_intensity" : {
+        "Description" : "If you currently experience nightmares, how distressing are they to you?",
+        "Levels"      : {
+            "-99" : "",
+            "999" : "n/a",
+            "0"   : "Not at all distressing",
+            "1"   : "Not that distressing",
+            "2"   : "Somewhat distressing",
+            "3"   : "Quite distressing",
+            "4"   : "Very distressing"
+        }
+    },
+
+    "nm_recurrence" : {
+        "Description" : "Do you experience recurring nightmares that relate to a situation that you have experienced in your waking life?",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "No",
+            "1"   : "Yes"
+        }
+    },
+
+    "nm_recurrence_pct" : {
+        "Description" : "How many of your nightmares are recurrent ones (in percent)?",
+        "Levels"      : {
+            "min"  : 0,
+            "max"  : 100,
+            "step" : 1
+        }
+    },
+
+    "nm_freq_childhood" : {
+        "Description" : "How often did you experience nightmares during your childhood (from 6 to 12 year of age)?",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "Never",
+            "1"   : "Less than once a year",
+            "2"   : "About once a year",
+            "3"   : "About two to four times a year",
+            "4"   : "About once a month",
+            "5"   : "Two to three times a month",
+            "6"   : "About once a week",
+            "7"   : "Several times a week"
+        }
+    },
+
+    "ld_freq" : {
+        "Description" : "How often do you experience so-called lucid dreams (see definition)?",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "Never",
+            "1"   : "Less than once a year",
+            "2"   : "About once a year",
+            "3"   : "About two to four times a year",
+            "4"   : "About once a month",
+            "5"   : "Two to three times a month",
+            "6"   : "About once a week",
+            "7"   : "Several times a week"
+        }
+    },
+
+    "ld_age" : {
+        "Description" : "If you have experienced lucid dreams, how old were you when they occurred the first time?",
+        "Levels"      : {
+            "min"  : 0,
+            "max"  : 100,
+            "step" : 1
+        }
+    },
+
+    "meaning_personal" : {
+        "Description" : "How much meaning do you attribute to your dreams?",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "Not at all",
+            "1"   : "Not that much",
+            "2"   : "Partly",
+            "3"   : "Somewhat",
+            "4"   : "Totally"
+        }
+    },
+
+    "interest_personal" : {
+        "Description" : "How strong is your interest in dreams?",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "Not at all",
+            "1"   : "Not that much",
+            "2"   : "Partly",
+            "3"   : "Somewhat",
+            "4"   : "Totally"
+        }
+    },
+
+    "meaning_general" : {
+        "Description" : "I think that dreams are meaningful.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "Not at all",
+            "1"   : "Not that much",
+            "2"   : "Partly",
+            "3"   : "Somewhat",
+            "4"   : "Totally"
+        }
+    },
+
+    "interest_yearning" : {
+        "Description" : "I want to know more about dreams.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "Not at all",
+            "1"   : "Not that much",
+            "2"   : "Partly",
+            "3"   : "Somewhat",
+            "4"   : "Totally"
+        }
+    },
+
+    "enrichment" : {
+        "Description" : "If somebody can recall and interpret his/her dreams, his/her life will be enriched.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "Not at all",
+            "1"   : "Not that much",
+            "2"   : "Partly",
+            "3"   : "Somewhat",
+            "4"   : "Totally"
+        }
+    },
+
+    "interest_general" : {
+        "Description" : "I think that dreaming is in general a very interesting phenomenon.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "Not at all",
+            "1"   : "Not that much",
+            "2"   : "Partly",
+            "3"   : "Somewhat",
+            "4"   : "Totally"
+        }
+    },
+
+    "personal_gain" : {
+        "Description" : "A person who reflects on her/his dreams is certainly able to learn more about her/himself.",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "Not at all",
+            "1"   : "Not that much",
+            "2"   : "Partly",
+            "3"   : "Somewhat",
+            "4"   : "Totally"
+        }
+    },
+
+    "pointers" : {
+        "Description" : "Do you have the impression that dreams provide impulses or pointers for your waking life?",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "Not at all",
+            "1"   : "Not that much",
+            "2"   : "Partly",
+            "3"   : "Somewhat",
+            "4"   : "Totally"
+        }
+    },
+
+    "sharing" : {
+        "Description" : "How often to you tell your dreams to others?",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "Never",
+            "1"   : "Less than once a year",
+            "2"   : "About once a year",
+            "3"   : "About two to four times a year",
+            "4"   : "About once a month",
+            "5"   : "Two to three times a month",
+            "6"   : "About once a week",
+            "7"   : "Several times a week"
+        }
+    },
+
+    "recording" : {
+        "Description" : "How often do you record your dreams?",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "Never",
+            "1"   : "Less than once a year",
+            "2"   : "About once a year",
+            "3"   : "About two to four times a year",
+            "4"   : "About once a month",
+            "5"   : "Two to three times a month",
+            "6"   : "About once a week",
+            "7"   : "Several times a week"
+        }
+    },
+
+    "mood_impact" : {
+        "Description" : "How often do your dreams affect your mood during the day?",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "Never",
+            "1"   : "Less than once a year",
+            "2"   : "About once a year",
+            "3"   : "About two to four times a year",
+            "4"   : "About once a month",
+            "5"   : "Two to three times a month",
+            "6"   : "About once a week",
+            "7"   : "Several times a week"
+        }
+    },
+
+    "creativity" : {
+        "Description" : "How often do your dreams give you creative ideas?",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "Never",
+            "1"   : "Less than once a year",
+            "2"   : "About once a year",
+            "3"   : "About two to four times a year",
+            "4"   : "About once a month",
+            "5"   : "Two to three times a month",
+            "6"   : "About once a week",
+            "7"   : "Several times a week"
+        }
+    },
+
+    "dejavu" : {
+        "Description" : "How often do you experience Deja vus (see definition)?",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "Never",
+            "1"   : "Less than once a year",
+            "2"   : "About once a year",
+            "3"   : "About two to four times a year",
+            "4"   : "About once a month",
+            "5"   : "Two to three times a month",
+            "6"   : "About once a week",
+            "7"   : "Several times a week"
+        }
+    },
+
+    "read" : {
+        "Description" : "Have you ever read something on the topic of dreams?",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "No",
+            "1"   : "One to two times",
+            "2"   : "Several times"
+        }
+    },
+
+    "read_influence" : {
+        "Description" : "Did the literature about dreaming / dream interpretation help you to better understand your dreams?",
+        "Levels"      : {
+            "-99" : "",
+            "0"   : "Not at all",
+            "1"   : "Not that much",
+            "2"   : "Somewhat",
+            "3"   : "Quite",
+            "4"   : "Very much"
+        }
+    }
+}
