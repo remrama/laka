@@ -16,7 +16,7 @@ From the session window, there is a button to initialize a new arousal window (`
 
 ### Data collected
 * **sleep**
-    - tracked with Sleep as Android every night (complemented with heart rate via Mi Band Tools app and Xiaomi Mi Band)
-    - recorded with Hypnodyne Zmax occasionally (~2x per week)
+    - tracked with [Sleep as Android](https://sleep.urbandroid.org) every night (complemented with heart rate via Mi Band Tools app and Xiaomi Mi Band)
+    - recorded with [Hypnodyne Zmax](http://hypnodynecorp.com/) occasionally (~2x per week)
 * **activities**
-    - recorded as much as possible with aTimeLogger app
+    - recorded as much as possible with [Nomie](https://nomie.app/)
