@@ -78,13 +78,14 @@ class sessionWindow(QtWidgets.QMainWindow):
         print(f'Created new session {current_session_id} at {current_timestamp}.')
         self.ses_id = current_session_id
         self.session_dir = curr_sess_dir
+        self.ses_inittime = current_timestamp
         # self.arousal_fname = arousal_fname
 
         
     def initUI(self):
 
-
-        self.statusBar().showMessage('Ready')
+        status_msg = f'{self.sub_id}_{self.ses_id}'#' at {self.ses_inittime}'
+        self.statusBar().showMessage(status_msg)
 
 
         ##### create actions that can be applied to *either* menu or toolbar #####
@@ -118,7 +119,7 @@ class sessionWindow(QtWidgets.QMainWindow):
         fileMenu.addAction(exitAct)
 
         # make submenu for available phenotype scales
-        newMenu = menuBar.addMenu('&New')
+        newMenu = menuBar.addMenu('&Add')
 
         phenoMenu = QtWidgets.QMenu('Phenotype',self)
         for scaleAction in phenoscaleActs:
