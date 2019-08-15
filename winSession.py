@@ -31,21 +31,17 @@ class sessionWindow(QtWidgets.QMainWindow):
     This file is not initialized until the Update button is hit.
     Everything left blank will not go into the file.
     """
-    def __init__(self,data_dir,subject_id,location,setup_keys):
+    def __init__(self,data_dir,subject_id,setup_keys):
                       # session_id='ses-0001',
                       # wakeup_id='wkup-01'):
         super().__init__()
         
+        self._sessionRunning = False # flag TODO: rn this IS NEVER SWITCHED OFF
         self.setup_keys = setup_keys
 
         self.data_dir = data_dir
         self.sub_id = subject_id
         self.session_fname = f'{self.data_dir}/{self.sub_id}/{self.sub_id}_sessions.tsv'
-
-        # create new session id
-        self.init_new_session(location)
-
-        self.setup_fname = f'{self.data_dir}/{self.sub_id}/{self.ses_id}/{self.sub_id}_{self.ses_id}_setup.json'
 
         # get the available scales for menu
         with open('./config.json','r') as json_file:
@@ -53,38 +49,46 @@ class sessionWindow(QtWidgets.QMainWindow):
             self.pheno_scales = config['longitudinal_scales']
             self.arousal_types = config['arousal_types']
 
+        self.get_next_session_id()
+        self.setup_fname = f'{self.data_dir}/{self.sub_id}/{self.ses_id}/{self.sub_id}_{self.ses_id}_setup.json'
+        
         self.initUI()
 
+        
 
-    def init_new_session(self,location):
+
+    def get_next_session_id(self):
+        # find next session id from BIDS session file
+        next_session_num = get_next_id_number(self.session_fname)
+        next_session_num = f'ses-{next_session_num:03d}'
+        self.ses_id = next_session_num
+
+    def init_new_session(self):
         """Append the session file with a new session and timestamp it.
         And add an *empty* arousal.tsv file.
         """
-        # find next session id from BIDS session file
-        current_session_num = get_next_id_number(self.session_fname)
-        current_session_id = f'ses-{current_session_num:03d}'
         current_timestamp = get_current_timestamp()
         # append csv with new session
-        row_data = [current_session_id,current_timestamp,location]
+        row_data = [self.ses_id,current_timestamp,'bedroom']
         append_tsv_row(self.session_fname,row_data)
         # create directory for new session
-        curr_sess_dir = f'{self.data_dir}/{self.sub_id}/{current_session_id}'
+        curr_sess_dir = f'{self.data_dir}/{self.sub_id}/{self.ses_id}'
         os.mkdir(curr_sess_dir)
         # initialize empty arousals.tsv file
-        arousal_fname = f'{curr_sess_dir}/{self.sub_id}_{current_session_id}_arousals.tsv'
+        arousal_fname = f'{curr_sess_dir}/{self.sub_id}_{self.ses_id}_arousals.tsv'
         row_data = ['arousal_id','acq_time','arousal_type']
         append_tsv_row(arousal_fname,row_data)
         # cleanup
-        print(f'Created new session {current_session_id} at {current_timestamp}.')
-        self.ses_id = current_session_id
+        print(f'Created new session {self.ses_id} at {current_timestamp}.')
         self.session_dir = curr_sess_dir
         self.ses_inittime = current_timestamp
         # self.arousal_fname = arousal_fname
-
+        self.save_setup()
+        self._sessionRunning = True
         
     def initUI(self):
 
-        status_msg = f'{self.sub_id}_{self.ses_id}'#' at {self.ses_inittime}'
+        status_msg = f'Next session: {self.sub_id}_{self.ses_id}'#' at {self.ses_inittime}'
         self.statusBar().showMessage(status_msg)
 
 
@@ -100,15 +104,20 @@ class sessionWindow(QtWidgets.QMainWindow):
         saveAct.setStatusTip('Save File')
         # saveAct.triggered.connect(self.savefile)
 
+        initArousalAct = QtWidgets.QAction(QtGui.QIcon('../images/yawn.png'),'&New Arousal',self)
+        initArousalAct.setShortcut('Ctrl+A')
+        initArousalAct.setStatusTip('Initialize a new arousal')
+        initArousalAct.triggered.connect(self.openArousalWindow)
+
         phenoscaleActs = [ QtWidgets.QAction(scale,self) for scale in self.pheno_scales ]
         for action, scale in zip(phenoscaleActs,self.pheno_scales):
             action.setStatusTip(f'Create new {scale} scale')
             action.triggered.connect(self.open_phenotype_scale)
 
-        arousalActs = [ QtWidgets.QAction(arotype,self) for arotype in self.arousal_types ]
-        for action, arotype in zip(arousalActs,self.arousal_types):
-            action.setStatusTip(f'Create new arousal with type as {arotype}')
-            action.triggered.connect(self.openArousalWindow)
+        # arousalActs = [ QtWidgets.QAction(arotype,self) for arotype in self.arousal_types ]
+        # for action, arotype in zip(arousalActs,self.arousal_types):
+        #     action.setStatusTip(f'Create new arousal with type as {arotype}')
+        #     action.triggered.connect(self.openArousalWindow)
 
 
         #####  setup menu bar  #####
@@ -126,10 +135,10 @@ class sessionWindow(QtWidgets.QMainWindow):
             phenoMenu.addAction(scaleAction)
         newMenu.addMenu(phenoMenu)
 
-        arousalMenu = QtWidgets.QMenu('Arousal',self)
-        for scaleAction in arousalActs:
-            arousalMenu.addAction(scaleAction)
-        newMenu.addMenu(arousalMenu)
+        # arousalMenu = QtWidgets.QMenu('Arousal',self)
+        # for scaleAction in arousalActs:
+        #     arousalMenu.addAction(scaleAction)
+        # newMenu.addMenu(arousalMenu)
 
         # mainMenu = self.menuBar()
         # mainMenu.setNativeMenuBar(False)
@@ -137,17 +146,16 @@ class sessionWindow(QtWidgets.QMainWindow):
         # fileAction = fileMenu.addAction('Change file')
         # fileAction.triggered.connect(lambda x: print(x))
 
-
-
         #####  setup tool bar  #####
-        # toolbar = self.addToolBar('Exit')
-        # toolbar.addAction(exitAct)
+        toolbar = self.addToolBar('&Add')
+        toolbar.addAction(initArousalAct)
+
 
         # create central widget for holding grid layout
         self.init_CentralWidget()
 
         # main window stuff
-        xywh = (300, 300, 200, 100) # xloc, yloc, width, height
+        xywh = (100, 300, 200, 100) # xloc, yloc, width, height
         self.setGeometry(*xywh)
         self.setWindowTitle('laka')    
         self.show()
@@ -168,8 +176,8 @@ class sessionWindow(QtWidgets.QMainWindow):
         self.setupLabels = [ QtWidgets.QLabel(opt) for opt in self.setup_keys ]
         self.setupLEdits = [ QtWidgets.QLineEdit() for opt in self.setup_keys ]
         # and a button to update them
-        updateSetupButton = QtWidgets.QPushButton('Update setup')
-        updateSetupButton.clicked.connect(self.save_setup)
+        initSessButton = QtWidgets.QPushButton('Initialize next session')
+        initSessButton.clicked.connect(self.init_new_session)
 
         # manage the location/size of widgets
         grid = QtWidgets.QGridLayout()
@@ -178,7 +186,7 @@ class sessionWindow(QtWidgets.QMainWindow):
             grid.addWidget(label,i,0)
             grid.addWidget(lineedit,i,1)
             i += 1
-        grid.addWidget(updateSetupButton,i,0,1,2)
+        grid.addWidget(initSessButton,i,0,1,2)
 
         # intialize the central widget
         centralWidget = QtWidgets.QWidget()
@@ -200,13 +208,31 @@ class sessionWindow(QtWidgets.QMainWindow):
         print(f'Saved to {self.setup_fname}.')
 
     def openArousalWindow(self):
-        # get the arousal type
-        aro_type = self.sender().text()
-        # initialize the widget
-        self.arousalWindow = arousalWindow(self.data_dir,self.sub_id,self.ses_id,aro_type)
-        # show the widget
-        self.arousalWindow.show()
+        # first make sure a session is running
+        if self._sessionRunning:
+            # # get the arousal type
+            # aro_type = self.sender().text()
+            # initialize the widget
+            self.arousalWindow = arousalWindow(self.data_dir,self.sub_id,self.ses_id,'natural')
+            # show the widget
+            self.arousalWindow.show()
+        else:
+            info_msg = 'Arousals can only be initialized during an ongoing Session.'
+            QtWidgets.QMessageBox.warning(self,'Warning',info_msg)
 
+
+    # def closeEvent(self,event):
+    #     '''Overrides default window shutdown
+    #     behavior by asking for confirmation.
+    #     '''
+    #     exit_msg = 'Are you sure you want to save and exit?'
+    #     reply = QtWidgets.QMessageBox.question(self,'Message',exit_msg,
+    #         QtWidgets.QMessageBox.Yes,QtWidgets.QMessageBox.No)
+    #     if reply == QtWidgets.QMessageBox.Yes:
+    #         self.save_scale()
+    #         event.accept()
+    #     else:
+    #         event.ignore()
 
     # def savefile(self):
 

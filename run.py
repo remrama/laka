@@ -1,15 +1,11 @@
 """
 Initialize a new session and open the main laka interface.
 """
-import os, sys, json, argparse
+import os, sys, json
 
 from PyQt5.QtWidgets import QApplication
 
 from winSession import sessionWindow
-
-parser = argparse.ArgumentParser()
-parser.add_argument('--location',default='bedroom',type=str)
-location = parser.parse_args().location
 
 # get the data directory and subject id
 CONFIG_FNAME = './config.json'
@@ -25,5 +21,5 @@ if '~' in data_dir:
 # run the app
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = sessionWindow(data_dir,subject_id,location,setup_keys)
+    window = sessionWindow(data_dir,subject_id,setup_keys)
     sys.exit(app.exec_())
