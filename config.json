@@ -3,6 +3,7 @@
     "subject_id"     : "sub-001",
 
     "setup_keys" : [
+        "location",
         "sleep_aids",
         "LDIMs",
         "notes"

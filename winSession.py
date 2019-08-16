@@ -69,14 +69,14 @@ class sessionWindow(QtWidgets.QMainWindow):
         """
         current_timestamp = get_current_timestamp()
         # append csv with new session
-        row_data = [self.ses_id,current_timestamp,'bedroom']
+        row_data = [self.ses_id,current_timestamp]
         append_tsv_row(self.session_fname,row_data)
         # create directory for new session
         curr_sess_dir = f'{self.data_dir}/{self.sub_id}/{self.ses_id}'
         os.mkdir(curr_sess_dir)
         # initialize empty arousals.tsv file
         arousal_fname = f'{curr_sess_dir}/{self.sub_id}_{self.ses_id}_arousals.tsv'
-        row_data = ['arousal_id','acq_time','arousal_type']
+        row_data = ['arousal_id','acq_time']
         append_tsv_row(arousal_fname,row_data)
         # cleanup
         print(f'Created new session {self.ses_id} at {current_timestamp}.')
@@ -216,7 +216,7 @@ class sessionWindow(QtWidgets.QMainWindow):
             # # get the arousal type
             # aro_type = self.sender().text()
             # initialize the widget
-            self.arousalWindow = arousalWindow(self.data_dir,self.sub_id,self.ses_id,'natural')
+            self.arousalWindow = arousalWindow(self.data_dir,self.sub_id,self.ses_id)
             # show the widget
             self.arousalWindow.show()
         else:

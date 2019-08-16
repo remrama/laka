@@ -24,7 +24,7 @@ class arousalWindow(QtWidgets.QMainWindow):
     the session by looking at the subject session file
     and creating the "next" entry.
     """
-    def __init__(self,data_dir,sub_id,ses_id,arousal_type,parent=None):
+    def __init__(self,data_dir,sub_id,ses_id,parent=None):
         super(self.__class__, self).__init__(parent)
 
         self.sub_id = sub_id
@@ -37,7 +37,6 @@ class arousalWindow(QtWidgets.QMainWindow):
         self.available_scales = config['arousal_scales']
 
         # generates arousal id
-        self.aro_type = arousal_type
         self.init_new_arousal()
 
         # for creating/saving
@@ -58,7 +57,7 @@ class arousalWindow(QtWidgets.QMainWindow):
         current_arousal_num = get_next_id_number(self.arousal_fname)
         current_arousal_id = f'aro-{current_arousal_num:03d}'
         current_timestamp = get_current_timestamp()
-        row_data = [current_arousal_id,current_timestamp,self.aro_type]
+        row_data = [current_arousal_id,current_timestamp]
         append_tsv_row(self.arousal_fname,row_data)
         # cleanup
         self.aro_id = current_arousal_id
@@ -74,7 +73,7 @@ class arousalWindow(QtWidgets.QMainWindow):
 
         # main window stuff
         self.setGeometry(300,300,300,300)
-        self.setWindowTitle(f'New arousal type {self.aro_type}')    
+        self.setWindowTitle('New arousal')    
         self.show()
 
 
@@ -125,6 +124,15 @@ class arousalWindow(QtWidgets.QMainWindow):
         #     prelimLayout.addWidget(l)
         #     prelimLayout.addWidget(w)
         
+        # arousal type
+        self.aroTypeLEdit = QtWidgets.QLineEdit()
+        aroTypeLabel = QtWidgets.QLabel('Arousal type')
+        aroTypeBox = QtWidgets.QGroupBox()
+        aroTypeLayout = QtWidgets.QVBoxLayout()
+        aroTypeBox.setLayout(aroTypeLayout)
+        aroTypeLayout.addWidget(aroTypeLabel)
+        aroTypeLayout.addWidget(self.aroTypeLEdit)
+
         # dream report
         self.reportText = QtWidgets.QTextEdit()
         reportLabel = QtWidgets.QLabel('Dream report (separate dreams with ---)')
@@ -185,10 +193,11 @@ class arousalWindow(QtWidgets.QMainWindow):
         # manage the location/size of widgets
         grid = QtWidgets.QGridLayout()
         # grid.addWidget(prelimBox,0,0)
-        grid.addWidget(reportBox,0,0)
-        grid.addWidget(lucidBinBox,1,0)
-        grid.addWidget(memsrcBox,2,0)
-        grid.addWidget(optbttnsBox,3,0)
+        grid.addWidget(aroTypeBox,0,0)
+        grid.addWidget(reportBox,1,0)
+        grid.addWidget(lucidBinBox,2,0)
+        grid.addWidget(memsrcBox,3,0)
+        grid.addWidget(optbttnsBox,4,0)
 
         centralWidget = QtWidgets.QWidget()
         centralWidget.setLayout(grid)
@@ -236,6 +245,11 @@ class arousalWindow(QtWidgets.QMainWindow):
 
         # initialize the payload empty because only adding stuff that was completeed
         payload = {}
+
+        # get arousal type
+        arousal_type = self.aroTypeLEdit.text()
+        if len(arousal_type) > 0:
+            payload['arousal_type'] = arousal_type
 
         # get text dream report
         dream_report = self.reportText.toPlainText()
