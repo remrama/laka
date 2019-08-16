@@ -96,7 +96,7 @@ class sessionWindow(QtWidgets.QMainWindow):
         # exitAct = QtWidgets.QAction(,'&Exit',self)        
         exitAct = QtWidgets.QAction('&Exit',self) #QtGui.QIcon('./image.jpg')
         exitAct.setShortcut('Ctrl+Q')
-        exitAct.setStatusTip('Exit application')
+        exitAct.setStatusTip('Exit laka')
         exitAct.triggered.connect(QtWidgets.qApp.quit)
         
         saveAct = QtWidgets.QAction('&Save File',self)
@@ -155,7 +155,7 @@ class sessionWindow(QtWidgets.QMainWindow):
         self.init_CentralWidget()
 
         # main window stuff
-        xywh = (100, 300, 200, 100) # xloc, yloc, width, height
+        xywh = (50, 100, self.winWidth, self.winHeight) # xloc, yloc, width, height
         self.setGeometry(*xywh)
         self.setWindowTitle('laka')    
         self.show()
@@ -192,6 +192,9 @@ class sessionWindow(QtWidgets.QMainWindow):
         centralWidget = QtWidgets.QWidget()
         centralWidget.setLayout(grid)
         self.setCentralWidget(centralWidget)
+
+        self.winWidth = centralWidget.sizeHint().width()
+        self.winHeight = centralWidget.sizeHint().height()
 
 
     def save_setup(self):
