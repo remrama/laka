@@ -1,4 +1,16 @@
 
+def load_config():
+    from json import load
+    with open('./config.json','r') as json_file:
+        return load(json_file)
+
+def load_scale(scale_name):
+    from json import load
+    scale_fname = f'./scales/{scale_name}.json'
+    with open(scale_fname,'r') as json_file:
+        return load(json_file)
+
+
 def get_current_timestamp():
     from time import strftime
     return strftime('%Y-%m-%dT%H:%M:%S')

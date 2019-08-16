@@ -3,7 +3,7 @@ import sys
 from json import load
 from PyQt5 import QtGui, QtWidgets, QtCore
 
-from utils import get_current_timestamp
+from utils import get_current_timestamp, load_scale
 
 class ScalePopup(QtWidgets.QScrollArea):
     def __init__(self,scalename):
@@ -11,7 +11,6 @@ class ScalePopup(QtWidgets.QScrollArea):
         # QtWidgets.QWidget.__init__(self)
 
         self.scalename = scalename
-        self.scale_fname = f'./scales/{scalename}.json'
         with open('./config.json') as json_file:
             config = load(json_file)
         data_dir = config['data_directory']
@@ -98,9 +97,7 @@ class ScalePopup(QtWidgets.QScrollArea):
         
 
     def load_probes(self):
-        from json import load
-        with open(self.scale_fname,'r') as json_file:
-            data = load(json_file)
+        self.scale_payload = load_scale()
         self.probes = { k: v for k, v in data.items() if k != 'MeasurementToolMetadata'}
 
 

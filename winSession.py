@@ -114,6 +114,10 @@ class sessionWindow(QtWidgets.QMainWindow):
         initArousalAct.setStatusTip('Initialize a new arousal')
         initArousalAct.triggered.connect(self.openArousalWindow)
 
+        delRecallAct = QtWidgets.QAction(QtGui.QIcon('../images/lightbulb.png'),'&Delayed Recall',self)
+        # delRecallAct.setShortcut('Ctrl+A')
+        delRecallAct.setStatusTip('Append a previous session with new/more dream report.')
+
         phenoscaleActs = [ QtWidgets.QAction(scale,self) for scale in self.pheno_scales ]
         for action, scale in zip(phenoscaleActs,self.pheno_scales):
             action.setStatusTip(f'Create new {scale} scale')
@@ -154,6 +158,7 @@ class sessionWindow(QtWidgets.QMainWindow):
         #####  setup tool bar  #####
         toolbar = self.addToolBar('&Add')
         toolbar.addAction(initArousalAct)
+        toolbar.addAction(delRecallAct)
 
 
         # create central widget for holding grid layout
