@@ -36,7 +36,7 @@ class sessionWindow(QtWidgets.QMainWindow):
                       # wakeup_id='wkup-01'):
         super().__init__()
         
-        self._sessionRunning = False # flag TODO: rn this IS NEVER SWITCHED OFF
+        self._sessionRunning = False
         self.setup_keys = setup_keys
 
         self.data_dir = data_dir
@@ -67,25 +67,28 @@ class sessionWindow(QtWidgets.QMainWindow):
         """Append the session file with a new session and timestamp it.
         And add an *empty* arousal.tsv file.
         """
-        current_timestamp = get_current_timestamp()
-        # append csv with new session
-        row_data = [self.ses_id,current_timestamp]
-        append_tsv_row(self.session_fname,row_data)
-        # create directory for new session
-        curr_sess_dir = f'{self.data_dir}/{self.sub_id}/{self.ses_id}'
-        os.mkdir(curr_sess_dir)
-        # initialize empty arousals.tsv file
-        arousal_fname = f'{curr_sess_dir}/{self.sub_id}_{self.ses_id}_arousals.tsv'
-        row_data = ['arousal_id','acq_time']
-        append_tsv_row(arousal_fname,row_data)
-        # cleanup
-        print(f'Created new session {self.ses_id} at {current_timestamp}.')
-        self.session_dir = curr_sess_dir
-        self.ses_inittime = current_timestamp
-        # self.arousal_fname = arousal_fname
-        self.save_setup()
-        self._sessionRunning = True
-        
+        if not self.sender().isChecked():
+            self._sessionRunning = False
+        else:
+            current_timestamp = get_current_timestamp()
+            # append csv with new session
+            row_data = [self.ses_id,current_timestamp]
+            append_tsv_row(self.session_fname,row_data)
+            # create directory for new session
+            curr_sess_dir = f'{self.data_dir}/{self.sub_id}/{self.ses_id}'
+            os.mkdir(curr_sess_dir)
+            # initialize empty arousals.tsv file
+            arousal_fname = f'{curr_sess_dir}/{self.sub_id}_{self.ses_id}_arousals.tsv'
+            row_data = ['arousal_id','acq_time']
+            append_tsv_row(arousal_fname,row_data)
+            # cleanup
+            print(f'Created new session {self.ses_id} at {current_timestamp}.')
+            self.session_dir = curr_sess_dir
+            self.ses_inittime = current_timestamp
+            # self.arousal_fname = arousal_fname
+            self.save_setup()
+            self._sessionRunning = True
+
     def initUI(self):
 
         status_msg = f'Next session: {self.sub_id}_{self.ses_id}'#' at {self.ses_inittime}'
@@ -177,6 +180,7 @@ class sessionWindow(QtWidgets.QMainWindow):
         self.setupLEdits = [ QtWidgets.QLineEdit() for opt in self.setup_keys ]
         # and a button to update them
         initSessButton = QtWidgets.QPushButton('Initialize next session')
+        initSessButton.setCheckable(True)
         initSessButton.clicked.connect(self.init_new_session)
 
         # manage the location/size of widgets
