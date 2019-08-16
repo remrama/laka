@@ -31,7 +31,7 @@ class sessionWindow(QtWidgets.QMainWindow):
     This file is not initialized until the Update button is hit.
     Everything left blank will not go into the file.
     """
-    def __init__(self,data_dir,subject_id,setup_keys):
+    def __init__(self,data_dir,setup_keys):
                       # session_id='ses-0001',
                       # wakeup_id='wkup-01'):
         super().__init__()
@@ -40,8 +40,6 @@ class sessionWindow(QtWidgets.QMainWindow):
         self.setup_keys = setup_keys
 
         self.data_dir = data_dir
-        self.sub_id = subject_id
-        self.session_fname = f'{self.data_dir}/{self.sub_id}/{self.sub_id}_sessions.tsv'
 
         # get the available scales for menu
         with open('./config.json','r') as json_file:
@@ -49,19 +47,14 @@ class sessionWindow(QtWidgets.QMainWindow):
             self.pheno_scales = config['longitudinal_scales']
             self.arousal_types = config['arousal_types']
 
-        self.get_next_session_id()
-        self.setup_fname = f'{self.data_dir}/{self.sub_id}/{self.ses_id}/{self.sub_id}_{self.ses_id}_setup.json'
-        
+        # self.get_next_session_id()        
         self.initUI()
 
-        
-
-
-    def get_next_session_id(self):
-        # find next session id from BIDS session file
-        next_session_num = get_next_id_number(self.session_fname)
-        next_session_num = f'ses-{next_session_num:03d}'
-        self.ses_id = next_session_num
+    # def get_next_session_id(self):
+    #     # find next session id from BIDS session file
+    #     next_session_num = get_next_id_number(self.session_fname)
+    #     next_session_num = f'ses-{next_session_num:03d}'
+    #     self.ses_id = next_session_num
 
     def init_new_session(self):
         """Append the session file with a new session and timestamp it.
@@ -70,29 +63,38 @@ class sessionWindow(QtWidgets.QMainWindow):
         if not self.sender().isChecked():
             self._sessionRunning = False
         else:
-            current_timestamp = get_current_timestamp()
-            # append csv with new session
-            row_data = [self.ses_id,current_timestamp]
-            append_tsv_row(self.session_fname,row_data)
-            # create directory for new session
-            curr_sess_dir = f'{self.data_dir}/{self.sub_id}/{self.ses_id}'
-            os.mkdir(curr_sess_dir)
-            # initialize empty arousals.tsv file
-            arousal_fname = f'{curr_sess_dir}/{self.sub_id}_{self.ses_id}_arousals.tsv'
-            row_data = ['arousal_id','acq_time']
-            append_tsv_row(arousal_fname,row_data)
-            # cleanup
-            print(f'Created new session {self.ses_id} at {current_timestamp}.')
-            self.session_dir = curr_sess_dir
-            self.ses_inittime = current_timestamp
-            # self.arousal_fname = arousal_fname
-            self.save_setup()
+
+            timestamp = get_current_timestamp()
+            ts4fname = timestamp.replace('-','').replace(':','')
+            self.session_dir = f'{self.data_dir}/session-{ts4fname}'
+            self.session_fname = f'{self.session_dir}/session_info.json'
+
+            os.mkdir(self.session_dir)
+            self.save_session_info()
+
             self._sessionRunning = True
+
+            # current_timestamp = get_current_timestamp()
+            # # append csv with new session
+            # row_data = [self.ses_id,current_timestamp]
+            # append_tsv_row(self.session_fname,row_data)
+            # # create directory for new session
+            # curr_sess_dir = f'{self.data_dir}/{self.sub_id}/{self.ses_id}'
+            # os.mkdir(curr_sess_dir)
+            # # initialize empty arousals.tsv file
+            # arousal_fname = f'{curr_sess_dir}/{self.sub_id}_{self.ses_id}_arousals.tsv'
+            # row_data = ['arousal_id','acq_time']
+            # append_tsv_row(arousal_fname,row_data)
+            # # cleanup
+            # print(f'Created new session at {current_timestamp}.')
+            # self.session_dir = curr_sess_dir
+            # self.ses_inittime = current_timestamp
+            # # self.arousal_fname = arousal_fname
 
     def initUI(self):
 
-        status_msg = f'Next session: {self.sub_id}_{self.ses_id}'#' at {self.ses_inittime}'
-        self.statusBar().showMessage(status_msg)
+        # status_msg = f'Next session: {self.sub_id}_{self.ses_id}'#' at {self.ses_inittime}'
+        self.statusBar().showMessage('Ready')
 
 
         ##### create actions that can be applied to *either* menu or toolbar #####
@@ -166,7 +168,7 @@ class sessionWindow(QtWidgets.QMainWindow):
 
     def open_phenotype_scale(self):
         scale = self.sender().text()
-        self.scalewin = ScalePopup(scale,self.sub_id)
+        self.scalewin = ScalePopup(scale)
         self.scalewin.show()
 
 
@@ -201,18 +203,18 @@ class sessionWindow(QtWidgets.QMainWindow):
         self.winHeight = centralWidget.sizeHint().height()
 
 
-    def save_setup(self):
-        setup_payload = {}
+    def save_session_info(self):
+        ses_payload = {'acq_time': get_current_timestamp()}
         for label, lineedit in zip(self.setupLabels,self.setupLEdits):
             response = lineedit.text()
             if response:
                 # sleep aids an be separate by commas
                 if ',' in response and label.text() in ['sleep_aids','LDIMs']:
                     response = [ r.strip() for r in response.split(',') ]
-                setup_payload[label.text()] = response
-        with open(self.setup_fname,'w') as json_file:
-            dump(setup_payload,json_file,sort_keys=True,indent=4,ensure_ascii=False)
-        print(f'Saved to {self.setup_fname}.')
+                ses_payload[label.text()] = response
+        with open(self.session_fname,'w') as json_file:
+            dump(ses_payload,json_file,sort_keys=True,indent=4,ensure_ascii=False)
+        print(f'Saved {self.session_fname}')
 
     def openArousalWindow(self):
         # first make sure a session is running
@@ -220,7 +222,7 @@ class sessionWindow(QtWidgets.QMainWindow):
             # # get the arousal type
             # aro_type = self.sender().text()
             # initialize the widget
-            self.arousalWindow = arousalWindow(self.data_dir,self.sub_id,self.ses_id)
+            self.arousalWindow = arousalWindow(self.session_dir)
             # show the widget
             self.arousalWindow.show()
         else:

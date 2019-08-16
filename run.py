@@ -12,7 +12,6 @@ CONFIG_FNAME = './config.json'
 with open(CONFIG_FNAME,'r') as infile:
     CONFIG = json.load(infile)
 data_dir   = CONFIG['data_directory']
-subject_id = CONFIG['subject_id']
 setup_keys = CONFIG['setup_keys']
 
 if '~' in data_dir:
@@ -21,5 +20,5 @@ if '~' in data_dir:
 # run the app
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = sessionWindow(data_dir,subject_id,setup_keys)
+    window = sessionWindow(data_dir,setup_keys)
     sys.exit(app.exec_())

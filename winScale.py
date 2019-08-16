@@ -6,7 +6,7 @@ from PyQt5 import QtGui, QtWidgets, QtCore
 from utils import get_current_timestamp
 
 class ScalePopup(QtWidgets.QScrollArea):
-    def __init__(self,scalename,subject_id):
+    def __init__(self,scalename):
         super(self.__class__, self).__init__()
         # QtWidgets.QWidget.__init__(self)
 
@@ -14,10 +14,12 @@ class ScalePopup(QtWidgets.QScrollArea):
         self.scale_fname = f'./scales/{scalename}.json'
         with open('./config.json') as json_file:
             config = load(json_file)
+        data_dir = config['data_directory']
         self.longitudinal_scales = config['longitudinal_scales']
 
-        timestamp = get_current_timestamp().split('T')[0]
-        self.results_fname = f'../data/source/{subject_id}/phenotype/{scalename}_{timestamp}.json'
+        # this filename is ONLY for longitudinal scales
+        timestamp = get_current_timestamp().replace('-','').replace(':','')
+        self.results_fname = f'{data_dir}/longitudinal/{scalename}_{timestamp}.json'
         
         from os import makedirs
         from os.path import exists, dirname
@@ -75,7 +77,7 @@ class ScalePopup(QtWidgets.QScrollArea):
                 response = v.value()
             self.payload[k] = response
 
-        self.payload['acq_time'] = get_current_timestamp()
+        # self.payload['acq_time'] = get_current_timestamp()
         
         # only save if longitudinal scale.
         # otherwise it's an arousal scale and will be saved
@@ -119,6 +121,6 @@ class ScalePopup(QtWidgets.QScrollArea):
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
-    window = ScalePopup(scalename='MADRE',subject_id='sub-001')
+    window = ScalePopup(scalename='MADRE')
     window.show()
     sys.exit(app.exec_())

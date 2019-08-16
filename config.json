@@ -1,6 +1,5 @@
 {
-    "data_directory" : "../data",
-    "subject_id"     : "sub-001",
+    "data_directory" : "../data/source/sub-001/laka",
 
     "setup_keys" : [
         "location",

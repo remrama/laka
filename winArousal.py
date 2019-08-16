@@ -24,23 +24,20 @@ class arousalWindow(QtWidgets.QMainWindow):
     the session by looking at the subject session file
     and creating the "next" entry.
     """
-    def __init__(self,data_dir,sub_id,ses_id,parent=None):
+    def __init__(self,session_dir,parent=None):
         super(self.__class__, self).__init__(parent)
-
-        self.sub_id = sub_id
-
-        # for appending
-        self.arousal_fname = f'{data_dir}/{sub_id}/{ses_id}/{sub_id}_{ses_id}_arousals.tsv'
 
         with open('./config.json') as json_file:
             config = load(json_file)
+        # data_dir = config['data_directory']
         self.available_scales = config['arousal_scales']
-
+        
         # generates arousal id
-        self.init_new_arousal()
+        # self.init_new_arousal()
 
         # for creating/saving
-        self.dream_fname = f'{data_dir}/{sub_id}/{ses_id}/dreams/{sub_id}_{ses_id}_task-sleep_{self.aro_id}_dream.json'
+        timestamp = get_current_timestamp().replace('-','').replace(':','')
+        self.dream_fname = f'{session_dir}/arousal-{timestamp}.json'
 
         self.init_CentralWidget()
 
@@ -54,12 +51,12 @@ class arousalWindow(QtWidgets.QMainWindow):
         TODO: restrict options for arousal type
 
         """
-        current_arousal_num = get_next_id_number(self.arousal_fname)
-        current_arousal_id = f'aro-{current_arousal_num:03d}'
-        current_timestamp = get_current_timestamp()
-        row_data = [current_arousal_id,current_timestamp]
-        append_tsv_row(self.arousal_fname,row_data)
-        # cleanup
+        # current_arousal_num = get_next_id_number(self.arousal_fname)
+        # current_arousal_id = f'aro-{current_arousal_num:03d}'
+        # current_timestamp = get_current_timestamp()
+        # row_data = [current_arousal_id,current_timestamp]
+        # append_tsv_row(self.arousal_fname,row_data)
+        # # cleanup
         self.aro_id = current_arousal_id
 
 
@@ -204,7 +201,7 @@ class arousalWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(centralWidget)
 
 
-        self.popups = { sname: ScalePopup(sname,self.sub_id) for sname in self.available_scales }
+        self.popups = { sname: ScalePopup(sname) for sname in self.available_scales }
         # dict to later determine whether a scale was used/clicked
         self.popups_completed = { sname: False for sname in self.available_scales }
 
@@ -244,7 +241,7 @@ class arousalWindow(QtWidgets.QMainWindow):
     def save_dream_json(self):
 
         # initialize the payload empty because only adding stuff that was completeed
-        payload = {}
+        payload = {'acq_time': get_current_timestamp()}
 
         # get arousal type
         arousal_type = self.aroTypeLEdit.text()
@@ -274,12 +271,12 @@ class arousalWindow(QtWidgets.QMainWindow):
             # responses = { qnum: slid.value() for qnum, slid in scalewidg.sliders.items() }
 
         # save
-        # If it's the first arousal, then need to make dreams directory.
-        if self.aro_id == 'aro-001':
-            os.mkdir(os.path.dirname(self.dream_fname))
+        # # If it's the first arousal, then need to make dreams directory.
+        # if self.aro_id == 'aro-001':
+        #     os.mkdir(os.path.dirname(self.dream_fname))
         with open(self.dream_fname,'w') as outfile:
             dump(payload,outfile,sort_keys=True,indent=4,ensure_ascii=False)
-        print(f'Saved {self.dream_fname}.')
+        print(f'Saved {self.dream_fname}')
 
         # from pandas import DataFrame
         # responses = { qnum: slid.value() for qnum, slid in self.sliders.items() }
