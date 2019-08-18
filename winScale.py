@@ -97,7 +97,7 @@ class ScalePopup(QtWidgets.QScrollArea):
         
 
     def load_probes(self):
-        self.scale_payload = load_scale()
+        data = load_scale(self.scalename)
         self.probes = { k: v for k, v in data.items() if k != 'MeasurementToolMetadata'}
 
 
