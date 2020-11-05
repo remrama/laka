@@ -1,0 +1,38 @@
+{
+    "MeasurementToolMetadata" : {
+        "Description" : "Sleep session initial questionnaire"
+    },
+
+    "location" : {
+        "Description"  : "location",
+        "ResponseType" : "dropdown",
+        "Levels"       : {
+            "0" : "bedroom",
+            "1" : "couch"
+        }
+    },
+
+    "sleep_aids" : {
+        "Description"  : "sleep_aids",
+        "ResponseType" : "checkboxes",
+        "Levels"       : {
+            "0" : "mask",
+            "1" : "earplugs"
+        }
+    },
+
+    "LDIMs" : {
+        "Description"  : "LDIMs",
+        "ResponseType" : "checkboxes",
+        "Levels"       : {
+            "0" : "WBTB",
+            "1" : "MILD",
+            "2" : "psypharm"
+        }
+    },
+
+    "notes" : {
+        "Description"  : "notes",
+        "ResponseType" : "text"
+    }
+}

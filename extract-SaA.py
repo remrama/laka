@@ -1,7 +1,7 @@
 """
 To extract data from android sleep data file.
 
-Every entry in the SaS datafile has 2 rows (data and column names).
+Every entry in the SaA datafile has 2 rows (data and column names).
 There is a new row for column names for each entry because the
 column names include event timestamps, and these are different for
 each night. This means there is also a unique amount of columns
@@ -121,6 +121,9 @@ with open(mov_fname,'w') as tsv_file:
 # "-" that separate the event and timestamp from a specific value.
 # Sometimes there are 3 "-" because an additional one for sci notation.
 event_data = data[event_slice]
+# get rid of the DHA events, which aren't useful rn
+dha_events = [ ev for ev in event_data if 'DHA' in ev ]
+event_data = [ ev for ev in event_data if 'DHA' not in ev ]
 with open(event_fname,'w') as tsv_file:
     writer = csv.writer(tsv_file,delimiter='\t')
     # write header/columns of tsv file
@@ -136,3 +139,18 @@ with open(event_fname,'w') as tsv_file:
             event, stamp, val = data_str.split('-',2)
             mov_row = [unixms2iso(stamp),event,float(val)]
         writer.writerow(mov_row)
+
+
+# do something with the DHA events??
+import struct
+dha_vals = [ ev.split('-',2)[-1] if ev.count('-')>1 else None for ev in dha_events ]
+dha_floats = [ float(val) for val in dha_vals if val is not None ]
+dha_bytearrays = [ bytearray(struct.pack("=f",f)) for f in dha_floats ]
+# dha_bytearrays = [ list(bytearray(struct.pack("=f",f))) for f in dha_floats ]
+# unpack them to one array
+dha_bytes = [ b for ba in dha_bytearrays for b in ba ]
+
+sleep_len = info_payload['hours'] * 60 * 60 # seconds
+
+
+
